@@ -3,6 +3,8 @@ import logo from "/website-scanner.svg";
 import useHookScanner from "~/hook/useHookScanner";
 import ModalModule from "~/Module/Modal";
 import Result from "~/containers/home/components/Result";
+import { Response } from "~/domain/Response";
+import { useState } from "react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,7 +14,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const { handleSubmit, modal, setModal } = useHookScanner();
+  const [url, setUrl] = useState<string>("");
+  const { handleSubmit, modal, setModal, response } = useHookScanner({ url });
   return (
     <div className="h-screen w-full p-60">
       <div className="flex justify-between content-center w-full">
@@ -27,17 +30,18 @@ export default function Index() {
         <div className="bg-white rounded-lg p-8 shadow-2xl drop-shadow-lg w-4/12">
           <form className=" mx-auto" onSubmit={handleSubmit}>
             <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              htmlFor="url"
+              className="block mb-2 text-sm text-gray-900 font-semibold"
             >
-              Your email
+              Your url
             </label>
             <input
-              type="email"
-              id="email"
+              type="url"
+              id="url"
               aria-describedby="helper-text-explanation"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="name@flowbite.com"
+              placeholder="htps://url.com"
+              onChange={(e) => setUrl(e.target.value)}
             />
             <input
               type="submit"
@@ -50,10 +54,10 @@ export default function Index() {
       <ModalModule
         modal={modal}
         setModal={setModal}
-        sizeHeightPorcentage={50}
-        sizeWidthPorcentage={50}
+        sizeHeightPorcentage={80}
+        sizeWidthPorcentage={80}
       >
-        <Result />
+        <Result response={response as Response} />
       </ModalModule>
     </div>
   );

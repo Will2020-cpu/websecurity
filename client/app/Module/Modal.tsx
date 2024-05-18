@@ -33,9 +33,10 @@ export default function ModalModule({
           backgroundColor: "#233244",
           borderRadius: "10px",
           padding: "20px",
-          height: `${sizeHeightPorcentage}%`,
+          maxHeight: `${sizeHeightPorcentage}%`,
           width: `${sizeWidthPorcentage}%`,
           border: "none",
+          overflowY: "auto",
         }}
       >
         {children}
